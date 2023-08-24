@@ -1,38 +1,66 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+body{
+	height: 100%;
+	background-color: blanchedalmond;
+}
+.container{
+	font-family: 'Dancing Script';
+	position: relative;
+	max-width: 800px;
+	padding: 10px;
+	margin: 50px auto;
+}
+.add-text{
+	width: 100%;
+	display: flex;
+	padding: 10px 0;
+}
+input{
+	font-family: 'Dancing Script';
+	width: 90%;
+	color: #333;
+	padding: 10px;
+	font-size: 22px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.add-text button{
+	margin: 0 10px;
+	background: #222;
+	color: #fff;
+	font-size: 18px;
+	text-transform: uppercase;
+	padding: 10px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.todo-list, .done-list{
+	margin: 5px 0;
+	padding: 20px;
+}
+h2{
+	font-size: 28px;
+	text-align: center;
+	color: black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+ol li{
+	width: 100%;
+	padding: 18px;
+	margin: 5px 0;
+	background: cornflowerblue;
+	font-size: 22px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+li button{
+	float: right;
+	padding: 3px;
+	font-size: 28px;
+	line-height: 28px;
+	margin-right: 10px;
+	background: none;
+	border: none;
+	cursor: pointer;
+} 
