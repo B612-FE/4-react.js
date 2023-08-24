@@ -90,8 +90,8 @@ function TodoList() {
               onClick={() => toggleDone(item, index)}
               style={{
                 backgroundImage: item.done
-                  ? "url('src/img/1.png')"
-                  : "url('src/img/2.png')",
+                  ? "url('https://i.ibb.co/NSdSXQ1/2.png')"
+                  : "url('https://i.ibb.co/7RzK9yd/1.png')",
               }}></button>
             <span>{item.text}</span>
             <button
@@ -109,8 +109,8 @@ function TodoList() {
               onClick={() => toggleDone(item, index)}
               style={{
                 backgroundImage: item.done
-                  ? "url('src/img/1.png')"
-                  : "url('src/img/2.png')",
+                  ? "url('https://i.ibb.co/NSdSXQ1/2.png')"
+                  : "url('https://i.ibb.co/7RzK9yd/1.png')",
               }}></button>
             <span className={item.done ? "done" : ""}>{item.text}</span>
             <button
