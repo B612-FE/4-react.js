@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./TodoList.css";
 
 function TodoList() {
@@ -10,14 +10,7 @@ function TodoList() {
     loadTodoList();
   }, []);
 
-  const handleSubmit = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      addTodoItem();
-    }
-  };
-
-  const addTodoItem = () => {
+  const addTodoItem = useCallback(() => {
     const value = inputRef.current.value;
 
     if (value) {
@@ -27,31 +20,61 @@ function TodoList() {
     } else {
       alert("내용을 입력해 주세요");
     }
-  };
+  }, [todos, doneItems]);
 
-  const toggleDone = (item, index) => {
-    if (item.done) {
-      const updatedDoneItems = doneItems.filter((_, i) => i !== index);
-      setDoneItems(updatedDoneItems);
-      setTodos([...todos, { ...item, done: false }]);
-    } else {
-      const updatedTodos = todos.filter((_, i) => i !== index);
-      setTodos(updatedTodos);
-      setDoneItems([...doneItems, { ...item, done: true }]);
-    }
-    saveTodoList(todos, doneItems);
-  };
+  const handleSubmit = useCallback(
+    (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        addTodoItem();
+      }
+    },
+    [addTodoItem]
+  );
 
-  const removeTodoItem = (item, index, isDone) => {
-    if (isDone) {
-      const updatedDoneItems = doneItems.filter((_, i) => i !== index);
-      setDoneItems(updatedDoneItems);
-    } else {
-      const updatedTodos = todos.filter((_, i) => i !== index);
-      setTodos(updatedTodos);
-    }
-    saveTodoList(todos, doneItems);
-  };
+  const removeItemFromList = useCallback((list, index) => {
+    return list.filter((_, i) => i !== index);
+  }, []);
+
+  const toggleDone = useCallback(
+    (item, index) => {
+      if (item.done) {
+        const updatedDoneItems = removeItemFromList(doneItems, index);
+        setDoneItems(updatedDoneItems);
+        setTodos((prevTodos) => {
+          const newTodos = [...prevTodos, { ...item, done: false }];
+          saveTodoList(newTodos, updatedDoneItems);
+          return newTodos;
+        });
+      } else {
+        const updatedTodos = removeItemFromList(todos, index);
+        setTodos(updatedTodos);
+        setDoneItems((prevDones) => {
+          const newDones = [...prevDones, { ...item, done: true }];
+          saveTodoList(updatedTodos, newDones);
+          return newDones;
+        });
+      }
+    },
+    [doneItems, todos]
+  );
+
+  const removeTodoItem = useCallback(
+    (item, index, isDone) => {
+      if (isDone) {
+        const updatedDoneItems = removeItemFromList(doneItems, index);
+        setDoneItems(updatedDoneItems);
+        saveTodoList(todos, updatedDoneItems);
+      } else {
+        setTodos((prevState) => {
+          const updatedtodos = removeItemFromList(prevState, index);
+          saveTodoList(updatedtodos, doneItems);
+          return updatedtodos;
+        });
+      }
+    },
+    [doneItems, todos]
+  );
 
   const saveTodoList = (allTodos, allDoneItems) => {
     localStorage.setItem(
