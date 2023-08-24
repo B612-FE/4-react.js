@@ -1,7 +1,13 @@
-import './App.css';
+import React from "react";
+import "./App.css";
+import TodoList from "./TodoList";
 
 function App() {
-    return <div>과제 파이팅 ~.~</div>;
+  return (
+    <div className="App">
+      <TodoList />
+    </div>
+  );
 }
 
 export default App;

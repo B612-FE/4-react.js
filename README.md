@@ -33,4 +33,3 @@ React를 이용해 지난 주차의 과제를 리팩토링 해 봅니다.
 - [useEffect](https://legacy.reactjs.org/docs/hooks-effect.html)
 
 - [코딩 컨벤션](https://ui.toast.com/fe-guide/ko_CODING-CONVENTION)
-
