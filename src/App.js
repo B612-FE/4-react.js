@@ -3,6 +3,8 @@ import './App.css';
 
 function App() {
 	const [inputValue, setInputValue] = useState('');
+	//inputValue 상태변수 생성, 초기값 빈 문자열
+	//setInputValue는 상태를 업데이트하는 함수
 	const [todoList, setTodoList] = useState([]);
 	const [doneList, setDoneList] = useState([]);
 
@@ -20,8 +22,12 @@ function App() {
 
 	const checkBtn = (index) => {
 		const doneItem = todoList[index];
+		//배열의 항목 변수에 할당
 		setDoneList([...doneList, doneItem]);
+		//새로운 추가된 배열 만들기
 		setTodoList(todoList.filter((_,i) => i !== index));
+		// todoList 배열에서 해당 인덱스 항목을 제외한 나머지 항목을 필터링하여 새로운 배열 생성
+		// setTodoList 사용 상태 업데이트
 	}
 
 	const xBtn = (index) => {
