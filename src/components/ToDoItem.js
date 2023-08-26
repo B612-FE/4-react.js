@@ -1,3 +1,6 @@
+// 각 할 일 항목들을 보여주는 기능
+// react-icons 에서 MdDone 과 MdDelete 아이콘을 사용
+
 import React from "react";
 import styled, { css } from "styled-components";
 import { MdDone, MdDelete } from "react-icons/md";
@@ -21,6 +24,9 @@ const TodoItemBlock = styled.div`
   align-items: center;
   padding-top: 12px;
   padding-bottom: 12px;
+
+  /* Component Selector 사용 */
+  /* TodoItemBlock 위에 커서가 있을 때, Remove 컴포넌트를 display */
   &:hover {
     ${Remove} {
       display: initial;
@@ -37,8 +43,11 @@ const CheckCircle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
   margin-right: 20px;
   cursor: pointer;
+
+  /* 단락 회로 평가 활용 */
   ${(props) =>
     props.done &&
     css`
@@ -51,6 +60,8 @@ const Text = styled.div`
   flex: 1;
   font-size: 21px;
   color: #495057;
+
+  /* 단락 회로 평가 활용 */
   ${(props) =>
     props.done &&
     css`

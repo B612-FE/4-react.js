@@ -1,3 +1,6 @@
+// 새로운 할 일을 등록하는 기능
+// react-icons 의 MdAdd 를 사용
+
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { MdAdd } from "react-icons/md";
