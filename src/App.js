@@ -1,53 +1,54 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import TodoEditor from "./ToDoEditor";
 import ToDoList from "./ToDoList";
 import DoneList from "./DoneList";
 
 function App() {
-  const [toDoList, setToDo] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
 
+  // 페이지 로드 시 localStorage에서 데이터 불러오기
   useEffect(() => {
-    const localToDoList = localStorage.getItem("itemList");
-    if (localToDoList) {
-      setToDo(JSON.parse(localToDoList));
-    }
-  }, []); //mount시 local storage에서 data 가져오기
+    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    setTasks(storedTasks);
+  }, []);
 
-  const onToggle = (targetId) => {
-    //바뀐 toggle값, id를 받아와서 toggle값 재설정하고 setTodo
-    setToDo(
-      toDoList.map((it) =>
-        it.id === targetId ? { ...it, isDone: !it.isDone } : it
+  // tasks가 업데이트될 때마다 localStorage에 저장
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  const addTask = () => {
+    if (newTask !== "") {
+      setTasks([...tasks, { id: Date.now(), text: newTask, isDone: false }]);
+      setNewTask("");
+    }
+  };
+
+  const toggleTask = (taskId) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, isDone: !task.isDone } : task
       )
     );
   };
 
-  const onRemove = (targetId) => {
-    const newToDoList = toDoList.filter((it) => it.id !== targetId);
-    setToDo(newToDoList);
-  };
-
-  const onCreate = (todo, _isDone) => {
-    const newToDo = { id: Date.now(), text: todo, isDone: _isDone };
-    setToDo([newToDo, ...toDoList]);
-    localStorage.setItem("itemList", JSON.stringify(toDoList));
+  const removeTask = (taskId) => {
+    setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
   return (
-    <div className="Container">
-      <h2>Things to do</h2>
-      <TodoEditor onCreate={onCreate}></TodoEditor>
-      <ToDoList
-        onToggle={onToggle}
-        onRemove={onRemove}
-        toDoList={toDoList}
-      ></ToDoList>
-      <DoneList
-        onToggle={onToggle}
-        onRemove={onRemove}
-        toDoList={toDoList}
-      ></DoneList>
+    <div className="App">
+      <h1>To Do List</h1>
+      <input
+        type="text"
+        value={newTask}
+        onChange={(e) => setNewTask(e.target.value)}
+        placeholder="Enter your to-do"
+      />
+      <button onClick={addTask}>+</button>
+      <ToDoList tasks={tasks} onToggle={toggleTask} onRemove={removeTask} />
+      <DoneList tasks={tasks} onToggle={toggleTask} onRemove={removeTask} />
     </div>
   );
 }

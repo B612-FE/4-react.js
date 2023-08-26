@@ -1,16 +1,21 @@
-//import Item from "./Item";
+import React from "react";
 
-const DoneList = (toDoList, onRemove, onToggle) => {
-  const isDoneList = toDoList.filter((it) => it.isDone === true);
+const ToDoList = ({ tasks, onToggle, onRemove }) => {
   return (
-    <section className="DoneList">
+    <section className="ToDoList">
       <h4>🐾Done!</h4>
       <ul>
-        {isDoneList &&
-          isDoneList.map((it) => (
-            <li key={it.id}>
-              <span onClick={() => onToggle(it.id)}>{it.text}</span>
-              <button onClick={() => onRemove(it.id)}>🧹</button>
+        {tasks
+          .filter((it) => it.isDone === true)
+          .map((task) => (
+            <li key={task.id}>
+              <span
+                className={task.isDone ? "done" : ""}
+                onClick={() => onToggle(task.id)}
+              >
+                {task.text}
+              </span>
+              <button onClick={() => onRemove(task.id)}>🧹</button>
             </li>
           ))}
       </ul>
@@ -18,8 +23,4 @@ const DoneList = (toDoList, onRemove, onToggle) => {
   );
 };
 
-DoneList.defaultProps = {
-  toDoList: [],
-};
-
-export default DoneList;
+export default ToDoList;

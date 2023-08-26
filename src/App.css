@@ -1,4 +1,4 @@
-.Container {
+.App {
   border: none;
   text-align: center;
   padding: 20px;
@@ -12,8 +12,4 @@
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
-}
-
-.ToDoEditor {
-  text-align: center;
 }

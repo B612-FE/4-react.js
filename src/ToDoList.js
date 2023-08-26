@@ -1,27 +1,26 @@
-//import Item from "./Item";
+import React from "react";
 
-const ToDoList = ({ toDoList, onRemove, onToggle }) => {
-  //ISdone이 false이면 출력하는 기능
-  const isToDoList = toDoList.filter((it) => it.isDone === false);
-
+const ToDoList = ({ tasks, onToggle, onRemove }) => {
   return (
     <section className="ToDoList">
       <h4>📁to do </h4>
       <ul>
-        {isToDoList &&
-          isToDoList.map((it) => (
-            <li key={it.id}>
-              <span onClick={() => onToggle(it.id)}>{it.text}</span>
-              <button onClick={() => onRemove(it.id)}>🧹</button>
+        {tasks
+          .filter((it) => it.isDone === false)
+          .map((task) => (
+            <li key={task.id}>
+              <span
+                className={task.isDone ? "done" : ""}
+                onClick={() => onToggle(task.id)}
+              >
+                {task.text}
+              </span>
+              <button onClick={() => onRemove(task.id)}>🧹</button>
             </li>
           ))}
       </ul>
     </section>
   );
-};
-
-ToDoList.defaultProps = {
-  toDoList: [],
 };
 
 export default ToDoList;
